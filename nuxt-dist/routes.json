@@ -1,0 +1,51 @@
+[
+  {
+    "name": "avisos",
+    "path": "/avisos",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\avisos.vue",
+    "chunkName": "pages/avisos",
+    "_name": "_32fdd4e3"
+  },
+  {
+    "name": "disciplina",
+    "path": "/disciplina",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\disciplina.vue",
+    "chunkName": "pages/disciplina",
+    "_name": "_bb6f64e8"
+  },
+  {
+    "name": "frequencia",
+    "path": "/frequencia",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\frequencia.vue",
+    "chunkName": "pages/frequencia",
+    "_name": "_1fbf1a35"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_56d44a0e"
+  },
+  {
+    "name": "notas",
+    "path": "/notas",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\notas.vue",
+    "chunkName": "pages/notas",
+    "_name": "_c1212856"
+  },
+  {
+    "name": "usuario",
+    "path": "/usuario",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\usuario.vue",
+    "chunkName": "pages/usuario",
+    "_name": "_2833f63e"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\mathe\\\\together\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_0aee37e2"
+  }
+]
