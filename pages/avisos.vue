@@ -6,7 +6,7 @@
       <div class="voltar">
         <a href="/usuario"><img src="/icons/left-arrow.svg" alt="Voltar" /></a>
       </div>
-      <p class="texto">Avisos</p>
+      <p class="texto">Avisos!</p>
     </main>
   </div>
 </template>
