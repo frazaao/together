@@ -10,6 +10,8 @@
         <p class="nome_frequencia">Frequência</p>
         <p class="nome_notas">Notas</p>
         <p class="nome_avisos">Avisos</p>
+        <p class="nome_relatorios">Relatórios</p>
+        <p class="nome_sair">Sair</p>
       </div>
 
       <div class="navegacao">
@@ -23,7 +25,10 @@
         <a href="/avisos"
           ><img class="avisos" src="/icons/avisos.svg" alt=""
         /></a>
-        <a href=""></a>
+        <a href="/relatorios"
+          ><img class="relatorios" src="/icons/relatorio.svg" alt=""
+        /></a>
+        <a href="/sair"><img class="sair" src="/icons/logout.svg" alt="" /></a>
       </div>
     </main>
   </div>
@@ -54,15 +59,14 @@ button {
 
 .texto {
   font-size: 1.7rem;
-  margin: 3rem 2rem;
-  margin-bottom: 5rem;
+  margin: 2rem 2rem;
+  margin-bottom: 6rem;
 }
 
 .navegacao {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 100px;
-  width: 426px;
 }
 
 a {
@@ -110,6 +114,18 @@ p {
   left: 2rem;
 }
 
+.relatorios {
+  position: relative;
+  top: 2rem;
+  left: 2rem;
+}
+
+.sair {
+  position: relative;
+  top: 2.4rem;
+  left: 2.5rem;
+}
+
 .nomes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -119,31 +135,37 @@ p {
 
 .nome_disciplina {
   position: relative;
-  top: 7rem;
+  top: 8rem;
   left: 2.5rem;
 }
 
 .nome_frequencia {
   position: relative;
-  top: 7rem;
+  top: 8rem;
   left: 6.3rem;
 }
 
 .nome_notas {
   position: relative;
-  top: 10.5rem;
+  top: 12.5rem;
   left: 3.2rem;
 }
 
 .nome_avisos {
   position: relative;
-  top: 10.5rem;
+  top: 12.5rem;
   left: 7.3rem;
 }
 
-.nome_recados {
+.nome_relatorios {
   position: relative;
-  top: 13.8rem;
-  left: 2.7rem;
+  top: 17.4rem;
+  left: 2.2rem;
+}
+
+.nome_sair {
+  position: relative;
+  top: 17.4rem;
+  left: 8rem;
 }
 </style>
