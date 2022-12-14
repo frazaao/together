@@ -1,7 +1,7 @@
 <template>
   <header>
     <button class="header">
-      <a v-if="haveBackButton" href="/usuario">
+      <a v-if="haveBackButton" @click="back">
         <img src="/icons/left-arrow.svg" alt="Seta para a esquerda" />
       </a>
       <img class="logo" src="/images/logo/white_logo.svg" alt="" />
@@ -15,6 +15,12 @@ export default {
 
   props: {
     haveBackButton: Boolean,
+  },
+
+  methods: {
+    back() {
+      this.$router.back()
+    },
   },
 }
 </script>

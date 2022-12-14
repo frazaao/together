@@ -3,42 +3,77 @@
     <HeaderComponent />
 
     <main>
-      <h1 class="texto">Olá, Usuário!</h1>
-
-      <div class="nomes">
-        <p class="nome_disciplina">Disciplina</p>
-        <p class="nome_frequencia">Frequência</p>
-        <p class="nome_notas">Notas</p>
-        <p class="nome_avisos">Avisos</p>
-        <p class="nome_relatorios">Relatórios</p>
-        <p class="nome_sair">Sair</p>
-      </div>
+      <h1 class="texto">Olá, {{ usuario.nome }}!</h1>
 
       <div class="navegacao">
-        <a href="/disciplina"
-          ><img class="disciplina" src="/icons/disciplina.svg" alt=""
-        /></a>
-        <a href="/frequencia"
-          ><img class="frequencia" src="/icons/frequencia.svg" alt=""
-        /></a>
-        <a href="/notas"><img class="notas" src="/icons/notas.svg" alt="" /></a>
-        <a href="/avisos"
-          ><img class="avisos" src="/icons/avisos.svg" alt=""
-        /></a>
-        <a href="/relatorios"
-          ><img class="relatorios" src="/icons/relatorio.svg" alt=""
-        /></a>
-        <a href="/sair"><img class="sair" src="/icons/logout.svg" alt="" /></a>
+        <CircleMenuItem
+          link="/disciplina"
+          src="/icons/disciplina.svg"
+          alt="Ícone de disciplina"
+        >
+          Disciplina
+        </CircleMenuItem>
+
+        <CircleMenuItem
+          link="/frequencia"
+          src="/icons/frequencia.svg"
+          alt="Ícone de frequencia"
+        >
+          Frequência
+        </CircleMenuItem>
+
+        <CircleMenuItem
+          link="/notas"
+          src="/icons/notas.svg"
+          alt="Ícone de notas"
+        >
+          Notas
+        </CircleMenuItem>
+
+        <CircleMenuItem
+          link="/avisos"
+          src="/icons/avisos.svg"
+          alt="Ícone de avisos"
+        >
+          Avisos
+        </CircleMenuItem>
+
+        <CircleMenuItem
+          link="/relatorios"
+          src="/icons/relatorio.svg"
+          alt="Ícone de relatorios"
+        >
+          Relatórios
+        </CircleMenuItem>
+
+        <CircleMenuItem
+          link="/sair"
+          src="/icons/logout.svg"
+          alt="Ícone de sair"
+        >
+          Sair
+        </CircleMenuItem>
       </div>
     </main>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import HeaderComponent from '~/components/Header.vue'
+import CircleMenuItem from '~/components/pages/usuario/CircleMenuItem.vue'
+
 export default {
   components: {
     HeaderComponent,
+    CircleMenuItem,
+  },
+
+  computed: {
+    ...mapState('usuario', {
+      usuario: (state) => state,
+    }),
   },
 }
 </script>
@@ -69,103 +104,9 @@ button {
   gap: 100px;
 }
 
-a {
-  text-decoration: none;
-  background: #f2f2f2;
-  border-radius: 50%;
-  margin: auto;
-  height: 120px;
-  width: 120px;
-}
-
 p {
   font-family: Roboto;
   font-weight: 400;
   font-size: 1.25rem;
-}
-
-.disciplina {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.frequencia {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.notas {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.avisos {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.recado {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.relatorios {
-  position: relative;
-  top: 2rem;
-  left: 2rem;
-}
-
-.sair {
-  position: relative;
-  top: 2.4rem;
-  left: 2.5rem;
-}
-
-.nomes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: absolute;
-  gap: 100px;
-}
-
-.nome_disciplina {
-  position: relative;
-  top: 8rem;
-  left: 2.5rem;
-}
-
-.nome_frequencia {
-  position: relative;
-  top: 8rem;
-  left: 6.3rem;
-}
-
-.nome_notas {
-  position: relative;
-  top: 12.5rem;
-  left: 3.2rem;
-}
-
-.nome_avisos {
-  position: relative;
-  top: 12.5rem;
-  left: 7.3rem;
-}
-
-.nome_relatorios {
-  position: relative;
-  top: 17.4rem;
-  left: 2.2rem;
-}
-
-.nome_sair {
-  position: relative;
-  top: 17.4rem;
-  left: 8rem;
 }
 </style>
