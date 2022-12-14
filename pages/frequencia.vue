@@ -15,10 +15,7 @@
           class="list-item"
         >
           <span class="list-title">{{ disciplina.nome }}</span>
-          <Badge
-            v-if="disciplina.frequencia"
-            :variant="presentState(disciplina.frequencia)"
-          >
+          <Badge v-if="disciplina.frequencia" variant="none">
             {{ disciplina.frequencia.presenca }}
             /
             {{ disciplina.frequencia.total }}

@@ -10,6 +10,25 @@ export const state = () => ({
         presenca: 10,
         total: 12,
       },
+      nota: [
+        {
+          id: 1,
+          valor: 7,
+          semestre: 1,
+        },
+
+        {
+          id: 2,
+          valor: 5,
+          semestre: 2,
+        },
+
+        {
+          id: 3,
+          valor: 9.5,
+          semestre: 3,
+        },
+      ],
     },
     {
       id: 2,
@@ -19,6 +38,25 @@ export const state = () => ({
         presenca: 5,
         total: 9,
       },
+      nota: [
+        {
+          id: 4,
+          valor: 4,
+          semestre: 1,
+        },
+
+        {
+          id: 5,
+          valor: 6,
+          semestre: 2,
+        },
+
+        {
+          id: 6,
+          valor: 5.5,
+          semestre: 3,
+        },
+      ],
     },
     {
       id: 3,
@@ -28,6 +66,25 @@ export const state = () => ({
         presenca: 7,
         total: 10,
       },
+      nota: [
+        {
+          id: 7,
+          valor: 8,
+          semestre: 1,
+        },
+
+        {
+          id: 8,
+          valor: 8.5,
+          semestre: 2,
+        },
+
+        {
+          id: 9,
+          valor: 7.25,
+          semestre: 3,
+        },
+      ],
     },
     {
       id: 4,
