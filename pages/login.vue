@@ -63,6 +63,15 @@ export default {
     password: '',
   }),
 
+  mounted() {
+    if (!localStorage.getItem('usuario')) {
+      this.$router.push('/login')
+      return
+    }
+
+    this.$router.push('/usuario')
+  },
+
   methods: {
     handleLogin() {
       if (!this.assertUserAndPassword()) {
