@@ -40,7 +40,7 @@
 
         <CircleMenuItem
           link="/relatorios"
-          src="/icons/relatorio.svg"
+          src="/icons/relatorios.svg"
           alt="Ícone de relatorios"
         >
           Relatórios
