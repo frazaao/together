@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <header>
-      <button></button>
-    </header>
+  <div class="app">
+    <header></header>
 
     <b-toast
       id="error-toast"
@@ -22,7 +20,7 @@
 
     <main class="login">
       <div class="username">
-        <label for="username">Digite o número de RA ou CPF</label>
+        <label for="username">Usuário</label>
         <input
           id="username"
           v-model="user"
@@ -111,7 +109,16 @@ export default {
 </script>
 
 <style scoped>
-button {
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+header {
   background-color: #2be888;
   width: 100%;
   height: 76px;
@@ -123,7 +130,6 @@ button {
 .logo {
   display: block;
   margin: auto;
-  padding-top: 80px;
 }
 
 .logo-inicial,
@@ -143,13 +149,15 @@ h1 {
   width: 100%;
   display: grid;
   margin: auto;
+  gap: 2rem;
+  padding: 0 4rem;
 }
 
 .username {
   font-size: 1.25rem;
   display: grid;
   margin: auto;
-  padding-top: 100px;
+  width: 100%;
 }
 
 .username input {
@@ -157,14 +165,14 @@ h1 {
   background: #d9d9d9;
   height: 2.5rem;
   border-style: none;
+  width: 100%;
 }
 
 .password {
   font-size: 1.25rem;
   display: grid;
   margin: auto;
-  padding-top: 90px;
-  padding-bottom: 10px;
+  width: 100%;
 }
 
 .password input {
@@ -172,7 +180,7 @@ h1 {
   background: #d9d9d9;
   height: 2.5rem;
   border-style: none;
-  width: 15rem;
+  width: 100%;
 }
 
 .botao {
@@ -181,7 +189,8 @@ h1 {
   font-size: 1.3rem;
   background: #2be888;
   border-style: none;
-  margin: 7rem 9rem;
-  padding: 0.7rem;
+  padding: 1rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
 }
 </style>
