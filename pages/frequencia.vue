@@ -8,33 +8,34 @@
       </div>
       <p class="texto">Frequencia de {{ aluno.nome }}</p>
 
-      <ul class="lista">
-        <li
-          v-for="(disciplina, key) in aluno.disciplinas"
-          :key="key"
-          class="list-item"
-        >
-          <span class="list-title">{{ disciplina.nome }}</span>
-          <Badge v-if="disciplina.frequencia" variant="none">
-            {{ disciplina.frequencia.presenca }}
-            /
-            {{ disciplina.frequencia.total }}
-          </Badge>
-        </li>
-      </ul>
+      <b-row class="justify-content-center">
+        <b-col md="auto">
+          <b-calendar
+            :value="value"
+            :date-info-fn="isPresent"
+            locale="pt-BR"
+            @context="onContext"
+          ></b-calendar>
+        </b-col>
+      </b-row>
     </main>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Badge from '~/components/Badge.vue'
 import HeaderComponent from '~/components/Header.vue'
+
 export default {
   components: {
     HeaderComponent,
-    Badge,
   },
+
+  data: () => ({
+    value: '',
+    context: null,
+    attendances: [],
+  }),
 
   computed: {
     ...mapState('aluno', {
@@ -42,17 +43,39 @@ export default {
     }),
   },
 
+  async mounted() {
+    this.attendances = await this.fetchAttendances()
+  },
+
   methods: {
-    presentState({ presenca, total }) {
-      if (presenca / total < 0.5) {
-        return 'danger'
+    onContext(ctx) {
+      this.context = ctx
+    },
+
+    async fetchAttendances() {
+      const { value: token } = await window.cookieStore.get('token')
+      const { data } = await this.$axios.get(
+        'http://localhost:8000/api/presenca',
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+
+      return data
+    },
+
+    isPresent(ymd, date) {
+      const attendance = this.attendances.find((attendance) => {
+        const attendanceDate = new Date(attendance.created_at)
+        return (
+          `${attendanceDate.getDate()}-${attendanceDate.getMonth()}-${attendanceDate.getFullYear()}` ===
+          `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        )
+      })
+
+      if (!attendance) {
+        return ''
       }
 
-      if (presenca / total < 0.75) {
-        return 'warning'
-      }
-
-      return 'success'
+      return attendance.presenca ? 'table-success' : 'table-danger'
     },
   },
 }
@@ -109,5 +132,10 @@ button {
   font-size: 1.5rem;
   font-weight: 400;
   color: #333;
+}
+
+::v-deep .b-calendar-header,
+::v-deep b-calendar-grid-help {
+  display: none;
 }
 </style>

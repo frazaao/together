@@ -71,30 +71,54 @@ export default {
   },
 
   methods: {
-    handleLogin() {
-      if (!this.assertUserAndPassword()) {
+    async handleLogin() {
+      if (!(await this.assertUserAndPassword())) {
         return
       }
-      this.setLocalStorageWithUserData()
+      await this.setLocalStorageWithUserData()
       this.redirectToUserPage()
     },
 
-    assertUserAndPassword() {
-      if (
-        this.user.toLowerCase() === 'matheus' &&
-        this.password === 'teste123'
-      ) {
+    async assertUserAndPassword() {
+      try {
+        const { data } = await this.$axios.post(
+          'http://localhost:8000/api/login',
+          {
+            senha: this.password,
+            email: this.user,
+          }
+        )
+
+        this.setCookieWithAuthorizationToken(data.token)
         return true
+      } catch {
+        this.$bvToast.show('error-toast')
+        return false
       }
-      this.$bvToast.show('error-toast')
-      return false
     },
 
-    setLocalStorageWithUserData() {
-      this.updateState({
-        nome: 'Matheus',
-        perfil: 'Administrador',
-      })
+    setCookieWithAuthorizationToken(token) {
+      window.cookieStore.set('token', token)
+    },
+
+    async setLocalStorageWithUserData() {
+      try {
+        const { value: token } = await window.cookieStore.get('token')
+        const { data } = await this.$axios.get('http://localhost:8000/api/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        this.updateState({
+          nome: data.nome,
+          perfil: data.perfil,
+        })
+
+        this.updateAlunoState(data.aluno[0])
+      } catch {
+        // TODO: Throw new Error 401 UNAUTHORIZED
+      }
     },
 
     redirectToUserPage() {
@@ -103,6 +127,10 @@ export default {
 
     ...mapActions('usuario', {
       updateState: 'updateState',
+    }),
+
+    ...mapActions('aluno', {
+      updateAlunoState: 'updateAlunoState',
     }),
   },
 }

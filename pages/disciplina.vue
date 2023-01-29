@@ -10,12 +10,12 @@
 
       <ul class="lista">
         <li
-          v-for="(disciplina, key) in aluno.disciplinas"
-          :key="key"
+          v-for="discipline in disciplines"
+          :key="discipline.id"
           class="list-item"
         >
-          <span class="list-title">{{ disciplina.nome }}</span>
-          <Badge v-if="disciplina.matriculado"> Matriculado </Badge>
+          <span class="list-title">{{ discipline.titulo }}</span>
+          <Badge> Matriculado </Badge>
         </li>
       </ul>
     </main>
@@ -32,10 +32,34 @@ export default {
     Badge,
   },
 
+  data: () => ({
+    disciplines: [],
+  }),
+
   computed: {
     ...mapState('aluno', {
       aluno: (state) => state,
     }),
+  },
+
+  mounted() {
+    this.fetchStudentDiscipline()
+  },
+
+  methods: {
+    async fetchStudentDiscipline() {
+      try {
+        const { value: token } = await window.cookieStore.get('token')
+        const { data } = await this.$axios.get(
+          'http://localhost:8000/api/aluno',
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+
+        this.disciplines = data[0].turma[0].disciplina
+      } catch {
+        // TODO: Throw new Error 404 not found
+      }
+    },
   },
 }
 </script>

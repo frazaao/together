@@ -10,14 +10,13 @@
     </main>
 
     <div class="notification-wrapper">
-      <Notification title="Reunião de pais e mestres" time="11m atrás">
-        Aviso de reunião de pais e mestres no dia 12/12 às 20:00 hrs. Contamos
-        com sua presença
-      </Notification>
-
-      <Notification title="Recesso escolar" time="12h atrás">
-        Aviso de recesso escolar entre os dias 16/12 à 31/12. Desejamos a toda
-        família boas festas.
+      <Notification
+        v-for="commentary in commentaries"
+        :key="commentary.id"
+        :title="`De ${commentary.professor.nome} sobre ${commentary.aluno.nome}`"
+        :time="mountDateString(commentary.created_at)"
+      >
+        {{ commentary.conteudo }}
       </Notification>
     </div>
   </div>
@@ -30,6 +29,38 @@ export default {
   components: {
     HeaderComponent,
     Notification,
+  },
+
+  data: () => ({
+    commentaries: [],
+  }),
+
+  async mounted() {
+    this.commentaries = await this.fetchCommentaries()
+  },
+
+  methods: {
+    async fetchCommentaries() {
+      try {
+        const { value: token } = await window.cookieStore.get('token')
+        const { data } = await this.$axios.get(
+          'http://localhost:8000/api/comentario',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        return data
+      } catch {
+        // TODO: Throw new Error 404 not found
+      }
+    },
+
+    mountDateString(date) {
+      return new Date(date).toLocaleDateString('pt-BR')
+    },
   },
 }
 </script>
