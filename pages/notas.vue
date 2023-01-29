@@ -12,29 +12,20 @@
         <label for="semestre">Selecione o bimestre</label>
         <select id="semestre" v-model="searchPeriod" name="semestre">
           <option :value="null" default>Selecione</option>
-          <option :value="1" default>1º Bimestre</option>
-          <option :value="2" default>2º Bimestre</option>
-          <option :value="3" default>3º Bimestre</option>
+          <option value="primeiro" default>1º Bimestre</option>
+          <option value="segundo" default>2º Bimestre</option>
+          <option value="terceiro" default>3º Bimestre</option>
+          <option value="quarto" default>4º Bimestre</option>
         </select>
       </div>
 
       <ul class="lista">
-        <li
-          v-for="(disciplina, key) in aluno.disciplinas"
-          :key="key"
-          class="list-item"
-        >
-          <span class="list-title">{{ disciplina.nome }}</span>
-          <Badge
-            v-if="disciplina.nota"
-            :variant="presentState(getNota(disciplina, searchPeriod))"
-          >
-            {{ getNota(disciplina, searchPeriod).nota }}
-            /
-            {{ getNota(disciplina, searchPeriod).total }}
+        <li v-for="score in getNota()" :key="score.id" class="list-item">
+          <span class="list-title">{{ score.disciplina.titulo }}</span>
+          <span>{{ getBimestre(score.trimestre) }}</span>
+          <Badge :variant="presentState({ nota: score.valor, total: 25 })">
+            {{ `${score.valor}/25` }}
           </Badge>
-
-          <Badge v-else variant="default"> N/A </Badge>
         </li>
       </ul>
     </main>
@@ -53,12 +44,17 @@ export default {
 
   data: () => ({
     searchPeriod: null,
+    scores: [],
   }),
 
   computed: {
     ...mapState('aluno', {
       aluno: (state) => state,
     }),
+  },
+
+  async mounted() {
+    this.scores = await this.fetchScores()
   },
 
   methods: {
@@ -74,22 +70,36 @@ export default {
       return 'success'
     },
 
-    getNota(disciplina, periodo = null) {
-      if (!periodo) {
-        return {
-          nota: disciplina.nota[disciplina.nota.length - 1].valor,
-          total: 10,
-        }
+    async fetchScores() {
+      const { value: token } = await window.cookieStore.get('token')
+      const { id } = await JSON.parse(window.localStorage.getItem('aluno'))
+      const { data } = await this.$axios.get(
+        `http://localhost:8000/api/nota/aluno/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+
+      return data.nota
+    },
+
+    getBimestre(bimestre) {
+      const options = {
+        primeiro: '1º',
+        segundo: '2º',
+        terceiro: '3º',
+        quarto: '4º',
       }
 
-      const nota = disciplina.nota.filter((nota) => {
-        return nota.semestre === periodo
-      })
+      return options[bimestre]
+    },
 
-      return {
-        nota: nota[0].valor,
-        total: 10,
+    getNota() {
+      if (!this.searchPeriod) {
+        return this.scores
       }
+
+      return this.scores.filter(
+        (score) => score.trimestre === this.searchPeriod
+      )
     },
   },
 }
@@ -133,7 +143,7 @@ button {
 
 .list-item {
   background-color: #f2f2f2;
-  margin: 1rem 2rem;
+  margin: 1rem;
   border-radius: 4px;
   height: 3rem;
   display: flex;
