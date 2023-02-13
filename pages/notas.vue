@@ -8,7 +8,7 @@
       </div>
       <p class="texto">Notas de {{ aluno.nome }}</p>
 
-      <div class="filter">
+      <div class="filter w-100">
         <label for="semestre">Selecione o bimestre</label>
         <select id="semestre" v-model="searchPeriod" name="semestre">
           <option :value="null" default>Selecione</option>
@@ -19,7 +19,14 @@
         </select>
       </div>
 
-      <ul class="lista">
+      <div
+        v-if="isLoading"
+        class="d-flex align-items-center justify-content-center my-4 py-4"
+      >
+        <b-spinner label="Carregando"></b-spinner>
+      </div>
+
+      <ul v-else class="lista">
         <li v-for="score in getNota()" :key="score.id" class="list-item">
           <span class="list-title">{{ score.disciplina.titulo }}</span>
           <span>{{ getBimestre(score.trimestre) }}</span>
@@ -45,6 +52,7 @@ export default {
   data: () => ({
     searchPeriod: null,
     scores: [],
+    isLoading: false,
   }),
 
   computed: {
@@ -71,14 +79,20 @@ export default {
     },
 
     async fetchScores() {
+      this.isLoading = true
       const { value: token } = await window.cookieStore.get('token')
       const { id } = await JSON.parse(window.localStorage.getItem('aluno'))
-      const { data } = await this.$axios.get(
-        `http://localhost:8000/api/nota/aluno/${id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-
-      return data.nota
+      try {
+        const { data } = await this.$axios.get(
+          `http://localhost:8000/api/nota/aluno/${id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        return data.nota
+      } catch {
+        //
+      } finally {
+        this.isLoading = false
+      }
     },
 
     getBimestre(bimestre) {
@@ -143,7 +157,7 @@ button {
 
 .list-item {
   background-color: #f2f2f2;
-  margin: 1rem;
+  margin: 1rem 0;
   border-radius: 4px;
   height: 3rem;
   display: flex;
@@ -159,7 +173,7 @@ button {
 }
 
 .filter {
-  padding: 0 5rem;
+  padding: 0 1.25rem;
 }
 
 select {

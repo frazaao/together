@@ -9,7 +9,7 @@
       <p class="texto">Frequencia de {{ aluno.nome }}</p>
 
       <b-row class="justify-content-center">
-        <b-col md="auto">
+        <b-col md="auto" class="d-flex justify-content-center">
           <b-calendar
             :value="value"
             :date-info-fn="isPresent"

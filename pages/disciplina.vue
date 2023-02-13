@@ -8,6 +8,13 @@
       </div>
       <p class="texto">Disciplinas Matrículadas!</p>
 
+      <div
+        v-if="isLoading"
+        class="d-flex align-items-center justify-content-center my-4 py-4"
+      >
+        <b-spinner label="Carregando"></b-spinner>
+      </div>
+
       <ul class="lista">
         <li
           v-for="discipline in disciplines"
@@ -34,6 +41,7 @@ export default {
 
   data: () => ({
     disciplines: [],
+    isLoading: false,
   }),
 
   computed: {
@@ -48,6 +56,7 @@ export default {
 
   methods: {
     async fetchStudentDiscipline() {
+      this.isLoading = true
       try {
         const { value: token } = await window.cookieStore.get('token')
         const { data } = await this.$axios.get(
@@ -58,6 +67,8 @@ export default {
         this.disciplines = data[0].turma[0].disciplina
       } catch {
         // TODO: Throw new Error 404 not found
+      } finally {
+        this.isLoading = false
       }
     },
   },

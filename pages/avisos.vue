@@ -10,8 +10,16 @@
     </main>
 
     <div class="notification-wrapper">
+      <div
+        v-if="isLoading"
+        class="d-flex align-items-center justify-content-center my-4 py-4"
+      >
+        <b-spinner label="Carregando"></b-spinner>
+      </div>
+
       <Notification
         v-for="commentary in commentaries"
+        v-else
         :key="commentary.id"
         :title="`De ${commentary.professor.nome} sobre ${commentary.aluno.nome}`"
         :time="mountDateString(commentary.created_at)"
@@ -33,6 +41,7 @@ export default {
 
   data: () => ({
     commentaries: [],
+    isLoading: false,
   }),
 
   async mounted() {
@@ -42,17 +51,24 @@ export default {
   methods: {
     async fetchCommentaries() {
       try {
+        this.isLoading = true
         const { value: token } = await window.cookieStore.get('token')
-        const { data } = await this.$axios.get(
-          'http://localhost:8000/api/comentario',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        try {
+          const { data } = await this.$axios.get(
+            'http://localhost:8000/api/comentario',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
 
-        return data
+          return data
+        } catch {
+          //
+        } finally {
+          this.isLoading = false
+        }
       } catch {
         // TODO: Throw new Error 404 not found
       }

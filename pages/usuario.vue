@@ -39,14 +39,6 @@
         </CircleMenuItem>
 
         <CircleMenuItem
-          link="/relatorios"
-          src="/icons/relatorios.svg"
-          alt="Ícone de relatorios"
-        >
-          Relatórios
-        </CircleMenuItem>
-
-        <CircleMenuItem
           link="/sair"
           src="/icons/logout.svg"
           alt="Ícone de sair"
