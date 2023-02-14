@@ -82,7 +82,7 @@ export default {
     async assertUserAndPassword() {
       try {
         const { data } = await this.$axios.post(
-          'http://localhost:8000/api/login',
+          'https://togetherapp.shop/api/login',
           {
             senha: this.password,
             email: this.user,
@@ -104,7 +104,7 @@ export default {
     async setLocalStorageWithUserData() {
       try {
         const { value: token } = await window.cookieStore.get('token')
-        const { data } = await this.$axios.get('http://localhost:8000/api/me', {
+        const { data } = await this.$axios.get('https://togetherapp.shop/api/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

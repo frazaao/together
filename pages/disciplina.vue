@@ -60,7 +60,7 @@ export default {
       try {
         const { value: token } = await window.cookieStore.get('token')
         const { data } = await this.$axios.get(
-          'http://localhost:8000/api/aluno',
+          'https://togetherapp.shop/api/aluno',
           { headers: { Authorization: `Bearer ${token}` } }
         )
 

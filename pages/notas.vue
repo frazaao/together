@@ -84,7 +84,7 @@ export default {
       const { id } = await JSON.parse(window.localStorage.getItem('aluno'))
       try {
         const { data } = await this.$axios.get(
-          `http://localhost:8000/api/nota/aluno/${id}`,
+          `https://togetherapp.shop/api/nota/aluno/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         return data.nota

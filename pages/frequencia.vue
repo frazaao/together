@@ -55,7 +55,7 @@ export default {
     async fetchAttendances() {
       const { value: token } = await window.cookieStore.get('token')
       const { data } = await this.$axios.get(
-        'http://localhost:8000/api/presenca',
+        'https://togetherapp.shop/api/presenca',
         { headers: { Authorization: `Bearer ${token}` } }
       )
 

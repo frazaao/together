@@ -55,7 +55,7 @@ export default {
         const { value: token } = await window.cookieStore.get('token')
         try {
           const { data } = await this.$axios.get(
-            'http://localhost:8000/api/comentario',
+            'https://togetherapp.shop/api/comentario',
             {
               headers: {
                 Authorization: `Bearer ${token}`,
